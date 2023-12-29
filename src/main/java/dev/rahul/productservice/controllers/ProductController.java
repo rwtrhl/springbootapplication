@@ -30,7 +30,7 @@ public class ProductController {
 //    }
 
     // Constructor Injection (Recommended)
-    public ProductController(@Qualifier("FakeStoreProductServiceImpl") ProductService productService) {
+    public ProductController(@Qualifier("SelfProductServiceImpl") ProductService productService) {
         this.productService = productService;
     }
 
@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") Long id)  throws NotFoundException {
+    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") String id)  throws NotFoundException {
         return new ResponseEntity<>(
                 productService.getProductById(id),
                 HttpStatus.OK
@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id){
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") String id) throws NotFoundException{
         return new ResponseEntity<>(
                 productService.deleteProductById(id),
                 HttpStatus.OK
@@ -66,7 +66,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product){
+    public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto product) throws NotFoundException{
         return new ResponseEntity<>(
                 productService.updateProductById(id, product),
                 HttpStatus.OK
